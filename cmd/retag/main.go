@@ -9,8 +9,8 @@ import (
 	"path"
 	"strings"
 
-	"github.com/vleurgat/dockerclient/pkg/dockerclient"
-	"github.com/vleurgat/regstat/internal/app/docker"
+	"github.com/vleurgat/dockerclient/pkg/client"
+	"github.com/vleurgat/dockerclient/pkg/config"
 )
 
 func splitTag(tag string) (string, string, string, error) {
@@ -61,7 +61,7 @@ func main() {
 		}
 		dockerConfigFile = path.Join(usr.HomeDir, ".docker", "config.json")
 	}
-	dockerConfig, err := docker.CreateConfig(dockerConfigFile)
+	dockerConfig, err := config.CreateConfig(dockerConfigFile)
 
 	log.Printf("from %s (%s, %s, %s)", fromTag, registry1, repo1, tag1)
 	log.Printf("to %s (%s, %s, %s)", toTag, registry2, repo2, tag2)
@@ -72,7 +72,7 @@ func main() {
 	log.Println("with from url", url1)
 	log.Println("with to url", url2)
 
-	client := dockerclient.CreateClient(dockerConfig)
+	client := client.CreateClient(dockerConfig)
 	manifest, err := client.GetV2Manifest(url1)
 	if err != nil {
 		log.Fatalf("failed to get manifest for %s, %s", fromTag, err.Error())
