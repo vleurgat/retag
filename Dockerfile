@@ -4,7 +4,7 @@ ENV GOPATH=/go
 ADD . /go/src/github.com/vleurgat/retag
 WORKDIR /go/src/github.com/vleurgat/retag
 RUN go get -d ./...
-RUN go install github.com/vleurgat/retag/cmd/retag
+RUN CGO_ENABLED=0 go install -a github.com/vleurgat/retag/cmd/retag
 
 FROM alpine
 WORKDIR /usr/local/bin
