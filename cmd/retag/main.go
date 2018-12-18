@@ -79,12 +79,12 @@ func main() {
 	log.Println("with from url ", url1)
 	log.Println("with to url ", url2)
 
-	client := client.CreateClient(dockerConfig)
-	manifest, err := client.GetV2Manifest(url1)
+	registryClient := client.CreateClient(dockerConfig)
+	manifest, err := registryClient.GetV2Manifest(url1)
 	if err != nil {
 		log.Fatalf("failed to get manifest for %s, %s", fromTag, err.Error())
 	}
-	err = client.PutV2Manifest(url2, manifest)
+	err = registryClient.PutV2Manifest(url2, manifest)
 	if err != nil {
 		log.Fatalf("failed to PUT manifest for %s, %s", toTag, err.Error())
 	}
