@@ -69,15 +69,13 @@ func main() {
 	}
 	dockerConfig, err := config.CreateConfig(dockerConfigFile)
 
-	log.Printf("from %s (%s, %s, %s)", fromTag, registry1, repo1, tag1)
-	log.Printf("to %s (%s, %s, %s)", toTag, registry2, repo2, tag2)
-	log.Println("using ", dockerConfigFile)
-	log.Println("insecure connection? ", insecure)
+	log.Printf("retag %s -> %s, using %s)", fromTag, toTag, dockerConfigFile)
+	if insecure {
+		log.Println("warning: using an insecure connection to the registry")
+	}
 
 	url1 := registryURL(insecure, registry1, repo1, tag1)
 	url2 := registryURL(insecure, registry2, repo2, tag2)
-	log.Println("with from url ", url1)
-	log.Println("with to url ", url2)
 
 	registryClient := client.CreateClient(dockerConfig)
 	manifest, err := registryClient.GetV2Manifest(url1)
@@ -88,5 +86,5 @@ func main() {
 	if err != nil {
 		log.Fatalf("failed to PUT manifest for %s, %s", toTag, err.Error())
 	}
-	log.Println("success")
+	log.Println("retag success")
 }
