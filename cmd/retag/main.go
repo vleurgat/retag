@@ -80,7 +80,7 @@ func main() {
 	registryClient := client.CreateClient(dockerConfig)
 	manifest, err := registryClient.GetV2Manifest(url1)
 	if err != nil {
-		log.Println("warning: no manifest for %s, %s", fromTag, err.Error())
+		log.Printf("warning: no manifest for %s, %s", fromTag, err.Error())
 	} else {
 		err = registryClient.PutV2Manifest(url2, manifest)
 		if err != nil {
