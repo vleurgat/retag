@@ -80,11 +80,11 @@ func main() {
 	registryClient := client.CreateClient(dockerConfig)
 	manifest, err := registryClient.GetV2Manifest(url1)
 	if err != nil {
-		log.Printf("warning: no manifest for %s, %s", fromTag, err.Error())
+		log.Fatalf("error: no such from-tag %s: %s", fromTag, err.Error())
 	} else {
 		err = registryClient.PutV2Manifest(url2, manifest)
 		if err != nil {
-			log.Fatalf("failed to PUT manifest for %s, %s", toTag, err.Error())
+			log.Fatalf("failed to push to-tag %s: %s", toTag, err.Error())
 		}
 		log.Println("retag success")
 	}
